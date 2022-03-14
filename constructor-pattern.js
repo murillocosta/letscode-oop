@@ -61,6 +61,6 @@ console.log(contaMarina);
 
 /*1- implementar um metodo, onde a cada operação executada(ex: saque, deposito, transferencia) ela deve ser registrada dentro do objeto (lançamentos)
 
-2-implementar um metodo onde todos os lançamentos sejam exibidos
+2-implementar um metodo onde todos os lançamentos sejam exibidos 
 */
 
