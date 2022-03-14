@@ -34,15 +34,15 @@ Conta.prototype.transferir = function (valorTransferencia, contaBeneficiada) {
     if (valorTransferencia <= this.saldo) {
         this.sacar(valorTransferencia); 
         contaBeneficiada.depositar(valorTransferencia);
+        //elimina registro feito pelo .sacar .depositar pra inserir formatado como transferência
         this.movimentacoes.pop()
         contaBeneficiada.movimentacoes.pop()
+        //formatação
         this.movimentacoes.push(`R$${valorTransferencia.toFixed(2)} Transferido para: ${contaBeneficiada.titular}.`)
         contaBeneficiada.movimentacoes.push(`R$${valorTransferencia.toFixed(2)} Recebido de: ${this.titular}.`)
         return `Transferência realizada com sucesso.`
 }
 }
-
-
 
 
 const contaMurillo = new Conta(336, 3387, 0, 5000, "Murillo Costa", "Conta Corrente");
