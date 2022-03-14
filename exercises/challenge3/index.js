@@ -13,7 +13,7 @@ console.log("===CONSTRUCTOR PATTERN===");
 */
 
 //letra maiscula indica que a funcao foi feita pra criar objetos
-function Conta(agencia = 0, numero = 0, digito = 0, saldo = 0, titular = "", tipo = "Conta Corrente") {
+function Conta(agencia = 0, numero = 0, digito = 0, saldo = 0, titular = "", tipo = "Conta Corrente", movimentacoes = '') {
     //propriedades
     this.agencia = agencia;
     this.numero = numero;
@@ -21,15 +21,17 @@ function Conta(agencia = 0, numero = 0, digito = 0, saldo = 0, titular = "", tip
     this.saldo = saldo;
     this.titular = titular;
     this.tipo = tipo;
+    this.movimentacoes = movimentacoes;
 };
 
 Conta.prototype.extrato = function () {
-    return this.saldo;
+    return this.movimentacoes;
 }
 
 Conta.prototype.sacar = function (valorSaque) {
     if (valorSaque <= this.saldo) {
         this.saldo -= valorSaque;
+        this.movimentacoes += `Saque R$${valorSaque} ` 
         return this.saldo;
     } else {
         return `Você não tem saldo suficiente. Tente um outro valor.`
@@ -39,27 +41,25 @@ Conta.prototype.sacar = function (valorSaque) {
 
 Conta.prototype.depositar = function (valorDeposito) {
     this.saldo += valorDeposito;
+    this.movimentacoes += `Depósito R$${valorDeposito} `
     return this.saldo;
 }
 
 
 Conta.prototype.transferir = function (valorTransferencia, contaBeneficiada) {
+    if (valorTransferencia <= this.saldo) {
         this.sacar(valorTransferencia); //origem
-        contaBeneficiada.depositar(valorTransferencia); //destino
+        contaBeneficiada.depositar(valorTransferencia);
+        this.movimentacoes += `-> Transferido para: ${contaBeneficiada.titular}. `
+        contaBeneficiada.movimentacoes += `<- Recebido de: ${this.titular}. `
         return `Transferência realizada com sucesso.`
-
 }
-//é necessário uso do new para executar funcoes de criação de objeto
-const contaMurillo = new Conta(336, 3387, 0, 5000, "Murillo de Alencar Leite Costa", "Conta Corrente");
+}
+
+
+
+
+const contaMurillo = new Conta(336, 3387, 0, 5000, "Murillo Costa", "Conta Corrente");
 console.log(contaMurillo);
-const contaMarina = new Conta(336, 3389, 0, 0, "Marina", "Conta Corrente")
+const contaMarina = new Conta(336, 3389, 0, 0, "Marina Melo", "Conta Corrente")
 console.log(contaMarina);
-
-
-//Desafio:
-
-/*1- implementar um metodo, onde a cada operação executada(ex: saque, deposito, transferencia) ela deve ser registrada dentro do objeto (lançamentos)
-
-2-implementar um metodo onde todos os lançamentos sejam exibidos 
-*/
-
