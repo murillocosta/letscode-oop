@@ -1,3 +1,5 @@
+let data = new Date
+
 function Conta(agencia = 0, numero = 0, digito = 0, saldo = 0, titular = "", tipo = "Conta Corrente", movimentacoes = []) {
     this.agencia = agencia;
     this.numero = numero;
@@ -15,7 +17,7 @@ Conta.prototype.extrato = function () {
 Conta.prototype.sacar = function (valorSaque) {
     if (valorSaque <= this.saldo) {
         this.saldo -= valorSaque;
-        this.movimentacoes.push(`Saque R$${valorSaque.toFixed(2)}`) 
+        this.movimentacoes.push(`${data.getDate()}/${data.getMonth()}/${data.getFullYear()} - ${data.getHours()}:${data.getMinutes()} - Saque R$${valorSaque.toFixed(2)}`) 
         return this.saldo;
     } else {
         return `Você não tem saldo suficiente. Tente um outro valor.`
@@ -25,7 +27,7 @@ Conta.prototype.sacar = function (valorSaque) {
 
 Conta.prototype.depositar = function (valorDeposito) {
     this.saldo += valorDeposito;
-    this.movimentacoes.push(`Depósito R$${valorDeposito.toFixed(2)}`)
+    this.movimentacoes.push(`${data.getDate()}/${data.getMonth()}/${data.getFullYear()} - ${data.getHours()}:${data.getMinutes()} - Depósito R$${valorDeposito.toFixed(2)}`)
     return this.saldo;
 }
 
@@ -38,8 +40,8 @@ Conta.prototype.transferir = function (valorTransferencia, contaBeneficiada) {
         this.movimentacoes.pop()
         contaBeneficiada.movimentacoes.pop()
         //formatação
-        this.movimentacoes.push(`R$${valorTransferencia.toFixed(2)} Transferido para: ${contaBeneficiada.titular}.`)
-        contaBeneficiada.movimentacoes.push(`R$${valorTransferencia.toFixed(2)} Recebido de: ${this.titular}.`)
+        this.movimentacoes.push(`${data.getDate()}/${data.getMonth()}/${data.getFullYear()} - ${data.getHours()}:${data.getMinutes()} - R$${valorTransferencia.toFixed(2)} Transferido para: ${contaBeneficiada.titular}.`)
+        contaBeneficiada.movimentacoes.push(`${data.getDate()}/${data.getMonth()}/${data.getFullYear()} - ${data.getHours()}:${data.getMinutes()} - R$${valorTransferencia.toFixed(2)} Recebido de: ${this.titular}.`)
         return `Transferência realizada com sucesso.`
 }
 }
