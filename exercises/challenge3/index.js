@@ -1,20 +1,4 @@
-console.log("===CONSTRUCTOR PATTERN===");
-
-/*
-        CONTA:
-        /   \
-    PROPS  METODOS
-    numero   sacar()
-    agencia  depositar()
-    saldo    transferir()
-    titular  extrato()
-    tipo
-
-*/
-
-//letra maiscula indica que a funcao foi feita pra criar objetos
-function Conta(agencia = 0, numero = 0, digito = 0, saldo = 0, titular = "", tipo = "Conta Corrente", movimentacoes = '') {
-    //propriedades
+function Conta(agencia = 0, numero = 0, digito = 0, saldo = 0, titular = "", tipo = "Conta Corrente", movimentacoes = []) {
     this.agencia = agencia;
     this.numero = numero;
     this.digito = digito;
@@ -31,7 +15,7 @@ Conta.prototype.extrato = function () {
 Conta.prototype.sacar = function (valorSaque) {
     if (valorSaque <= this.saldo) {
         this.saldo -= valorSaque;
-        this.movimentacoes += `Saque R$${valorSaque} ` 
+        this.movimentacoes.push(`Saque R$${valorSaque.toFixed(2)}`) 
         return this.saldo;
     } else {
         return `Você não tem saldo suficiente. Tente um outro valor.`
@@ -41,17 +25,19 @@ Conta.prototype.sacar = function (valorSaque) {
 
 Conta.prototype.depositar = function (valorDeposito) {
     this.saldo += valorDeposito;
-    this.movimentacoes += `Depósito R$${valorDeposito} `
+    this.movimentacoes.push(`Depósito R$${valorDeposito.toFixed(2)}`)
     return this.saldo;
 }
 
 
 Conta.prototype.transferir = function (valorTransferencia, contaBeneficiada) {
     if (valorTransferencia <= this.saldo) {
-        this.sacar(valorTransferencia); //origem
+        this.sacar(valorTransferencia); 
         contaBeneficiada.depositar(valorTransferencia);
-        this.movimentacoes += `-> Transferido para: ${contaBeneficiada.titular}. `
-        contaBeneficiada.movimentacoes += `<- Recebido de: ${this.titular}. `
+        this.movimentacoes.pop()
+        contaBeneficiada.movimentacoes.pop()
+        this.movimentacoes.push(`R$${valorTransferencia.toFixed(2)} Transferido para: ${contaBeneficiada.titular}.`)
+        contaBeneficiada.movimentacoes.push(`R$${valorTransferencia.toFixed(2)} Recebido de: ${this.titular}.`)
         return `Transferência realizada com sucesso.`
 }
 }
