@@ -43,6 +43,13 @@ class Televisao {
         return this.canal.atual;
     }
 
+    mudaCanal(numero) {
+        if(this.ligada && numero <= this.canal.max && numero >= this.canal.min) {
+            this.canal.atual = numero;
+        }
+        return this.canal.atual;
+    }
+
     aumentaVolume() {
         if (this.ligada && this.volume.atual < this.volume.max) {
             ++this.volume.atual
@@ -58,8 +65,6 @@ class Televisao {
     }
 
 }
-
-
 // fim da implementação pública
 
 // implementação privada
@@ -98,6 +103,13 @@ class TelevisaoPrivada {
         return this.ligada = false;
     }
 
+    mudaCanal(numero) {
+        if(this.ligada && numero <= this.canal.max && numero >= this.canal.min) {
+            this.canal.atual = numero;
+        }
+        return this.canal.atual;
+    }
+
     sobeCanal() {
         if(this.ligada && this.canal.atual < this.canal.max) {
             ++this.canal.atual
@@ -127,8 +139,6 @@ class TelevisaoPrivada {
     }
 
 }
-
-
 // fim da implementação privada
 
 const televisao1 = new Televisao('Samsung', 'LED', 'FULLHD', true, 40, 1800);
