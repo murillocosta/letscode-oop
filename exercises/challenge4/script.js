@@ -21,8 +21,11 @@ const CALCULATOR = (function () {
     }
 
     calculadora.dividir = function (a, b) {
+        if (b === 0) {
+            return "Não é possível dividir por zero."
+        } else {
         calculadora.historico.push(`${a} / ${b} = ${a / b}`)
-        return calculadora.resultado = a / b;
+        return calculadora.resultado = a / b;}
     }
 
     calculadora.exibir = function () {
